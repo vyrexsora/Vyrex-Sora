@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Vyrex Sora</title>
+  <link rel="stylesheet" href="navbar.css">
+  <link rel="stylesheet" href="contact.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="list.html">List</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a class="visited">Contact Us</a></li>
+    <li><a href="privacy.html">Privacy Policy</a></li>
+    <li><a href="terms.html">Terms & Condition</a></li>
+  </ul>
+</nav>
+
+<nav class="nav">
+  <h1 class="logo">Vyrex<span>Sora</span></h1>
+
+  <div class="nav-right">
+    <a href="search.html">
+      <div class="nav-search-box">
+        <div class="nav-search-wrapper">
+          <svg class="nav-search-icon" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21L16.65 16.65"/>
+          </svg>
+        </div>
+      </div>
+    </a>
+
+    <div class="menu-toggle">☰</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="contact-hero">
+  <h1>Contact <span>Vyrex<span>Sora</span></span></h1>
+  <p class="contact-subtitle">
+    Have questions, suggestions, or just want to talk anime?  
+    Reach out anytime.
+  </p>
+</section>
+
+<!-- CONTENT -->
+<section class="contact-container">
+
+  <!-- FORM CARD -->
+  <div class="contact-card">
+    <h2>Send a Message</h2>
+    
+    <form class="contact-form" id="contact-form">
+      <div class="input-group">
+        <input type="text" name="name" required>
+        <label>Your Name</label>
+      </div>
+    
+      <div class="input-group">
+        <input type="email" name="email" required>
+        <label>Your Email</label>
+      </div>
+    
+      <div class="input-group">
+        <textarea name="message" rows="4" required></textarea>
+        <label>Your Message</label>
+      </div>
+    
+      <button type="submit" class="contact-btn">Send Message</button>
+    </form>
+  </div>
+  
+    <!-- NEW CONTACT METHODS CARD -->
+  <div class="contact-card">
+    <h2>Other Ways to Reach Us</h2>
+
+    <div class="contact-methods">
+      <p><strong>Email:</strong> <a href="mailto:vyrexsora@gmail.com">vyrexsora@gmail.com</a></p>
+      <p><strong>Instagram:</strong> <a href="https://www.instagram.com/vyrexsora?igsh=NWduaXQ1a21nMDY1">@vyrexsora</a></p>
+      <p><strong>Discord:</strong> <a href="https://discord.gg/BuekrdM2U">Join our Discord</a></p>
+    </div>
+
+    <p class="contact-note">
+      We may not reply instantly, but every message is seen and valued.
+    </p>
+  </div>
+
+  <!-- INFO CARD -->
+  <div class="contact-card highlight">
+    <h2>Why Contact Us?</h2>
+    <p>
+      Whether it's feedback, suggestions, or just sharing your favorite anime —  
+      we’d love to hear from you.
+    </p>
+    <p>
+      <strong>Vyrex Sora</strong> is a one-man project, and every message matters.
+    </p>
+  </div>
+
+</section>
+
+<!-- MESSAGE MODAL -->
+<div id="message-box" class="message-box">
+  <div class="message-content">
+    <p id="message-text">Sending...</p>
+    <button id="message-btn">OK</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© Vyrex Sora 2026</p>
+  <p class="footer-tagline">A journey that never truly ends</p>
+  <p class="footer-made">Made with ♥️</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script src="contact.js"></script>
+<script src="navbar.js"></script>
+</body>
+</html>

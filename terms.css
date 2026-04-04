@@ -1,0 +1,99 @@
+/* HERO */
+.terms-hero {
+  padding: 20px;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  text-align: center;
+  background: radial-gradient(circle at center, rgba(180,255,0,0.1), transparent 70%);
+}
+
+.terms-hero h1 {
+  font-size: 22px;
+}
+
+.terms-hero span {
+  padding: 0 4px;
+  font-family: 'Courier New', Courier, monospace;
+  color: var(--acid-lime);
+  text-shadow: 0 0 15px var(--acid-lime);
+}
+
+.terms-hero span > span {
+  border-radius: 8px;
+  background: var(--acid-lime);
+  color: black;
+}
+
+.terms-subtitle {
+  font-size: 10px;
+  color: lightgray;
+}
+
+/* LAST UPDATED */
+.last-updated {
+  font-size: 10px;
+  color: gray;
+  opacity: 0.7;
+}
+
+/* CONTAINER */
+.terms-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* CARDS (SCROLL REVEAL BASE) */
+.terms-card {
+  padding: 20px;
+  border-radius: 15px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease;
+}
+
+/* WHEN VISIBLE */
+.terms-card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* TITLE */
+.terms-card h2 {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: var(--acid-lime);
+}
+
+/* TEXT */
+.terms-card p {
+  font-size: 12px;
+  color: #ccc;
+  line-height: 1.6;
+}
+
+/* LIST */
+.terms-card ul {
+  font-size: 12px;
+  color: #ccc;
+  line-height: 1.8;
+}
+
+/* HIGHLIGHT */
+.highlight {
+  border: 1px solid var(--acid-lime);
+  box-shadow: 0 0 20px var(--acid-lime);
+}
+
+/* HOVER */
+.terms-card:hover {
+  box-shadow: 0 0 20px var(--acid-lime);
+  border-color: var(--acid-lime);
+}

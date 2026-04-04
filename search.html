@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search - Vyrex Sora</title>
+  <link rel="stylesheet" href="navbar.css">
+  <link rel="stylesheet" href="search.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="list.html">List</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="contact.html">Contact Us</a></li>
+    <li><a href="privacy.html">Privacy Policy</a></li>
+    <li><a href="terms.html">Terms & Condition</a></li>
+  </ul>
+</nav>
+
+<nav class="nav">
+  <h1 class="logo">Vyrex<span>Sora</span></h1>
+
+  <div class="nav-right">
+    <a>
+      <div class="nav-search-box">
+        <div class="nav-search-wrapper">
+          <svg class="nav-search-icon visited-search" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21L16.65 16.65"/>
+          </svg>
+        </div>
+      </div>
+    </a>
+
+    <div class="menu-toggle">☰</div>
+  </div>
+</nav>
+
+
+<!-- HERO -->
+<section class="hero">
+  <div class="content">
+    <h2>Vyrex<span>Sora</span></h2>
+    <p>Search and explore thousands of anime instantly.</p>
+
+    <div class="search-box">
+      <div class="search-wrapper">
+        <svg class="search-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="M21 21L16.65 16.65"/>
+        </svg>
+        <input type="search" id="searchInput" placeholder="Search">
+      </div>
+      
+      <a href="#results">
+        <button class="search-btn" onclick="searchAnime()">Search</button>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="results" id="results"></section>
+
+<footer class="footer">
+  <p>© Vyrex Sora 2026</p>
+  <p class="footer-tagline">A journey that never truly ends</p>
+  <p class="footer-made">Made with ♥️</p>
+</footer>
+
+<script src="search.js"></script>
+<script src="navbar.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+/* HERO */
+.anime-hero {
+  height: 60vh;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.anime-hero-content {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  padding-top: 50px;
+  z-index: 2;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.6),
+    rgba(0,0,0,0.3),
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to top,
+    black 60%,
+    transparent 100%
+  );
+}
+
+.anime-hero h1 {
+  font-size: 12px;
+}
+
+.anime-hero p {
+  margin-top: 10px;
+  font-size: 6px;
+  color: lightgray;
+}
+
+/* CONTAINER */
+.anime-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* CARD */
+.anime-card {
+  border-bottom: 0.8px solid #aaa;
+  padding: 10px;
+}
+
+.anime-card h2 {
+  color: white;
+  margin-bottom: 10px;
+}
+
+.anime-card p {
+  font-size: 12px;
+  color: #aaa;
+  line-height: 1.6;
+}
+
+/* CHARACTERS */
+.characters {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+}
+
+.character {
+  min-width: 100px;
+  text-align: center;
+}
+
+.character img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.rating-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+
+/* RATING TEXT */
+.rating {
+  font-size: 10px;
+  color: white;
+}
+
+/* ICON */
+.add-btn {
+  width: 20px;
+  height: 20px;
+  filter: invert(1);
+  transition: 0.2s ease;
+}
+
+.add-btn:hover {
+  filter: invert(89%) sepia(87%) saturate(500%) hue-rotate(50deg) brightness(105%) contrast(105%);
+}
