@@ -1,4 +1,4 @@
-// BUTTON HOVER EFFECT FUNCTION
+// BUTTON EFFECT
 function applyButtonEffects() {
   const buttons = document.querySelectorAll("button");
   
@@ -17,120 +17,177 @@ function applyButtonEffects() {
   });
 }
 
-// RUN ON LOAD
 applyButtonEffects();
 
-// SEARCH ANIME (JIKAN API) - SMOOTH VERSION
+// FETCH
 async function loadAnimeData(url) {
   try {
     let res = await fetch(url);
-
-    if (!res.ok) {
-      throw new Error("<p>Failed to fetch data</p>");
-    }
-
     let data = await res.json();
     return data.data;
-
-  } catch (err) {
-    console.error(err);
-    document.getElementById("results").innerHTML = "<p>Error loading data. Try again.</p>";
+  } catch {
     return [];
   }
 }
 
-async function updateResults(animeData, scrollToResults = false) {
+// RESULTS
+async function updateResults(animeData, scroll = false) {
   let results = document.getElementById("results");
+  results.innerHTML = "";
   
-  // Fade out effect
-  results.classList.add('fade-out');
+  if (!animeData || animeData.length === 0) {
+    results.innerHTML = "<p>No results found</p>";
+    return;
+  }
   
-  setTimeout(() => {
-    results.innerHTML = "";
+  animeData.forEach(anime => {
+    const title = anime.title_english || anime.title;
     
-    if (!animeData || animeData.length === 0) {
-      results.innerHTML = "<p>No results found</p>";
-      results.classList.remove('fade-out');
-      return;
-    }
-
-    animeData.forEach((anime, index) => {
-      let card = document.createElement("div");
-      card.classList.add("card");
-      card.style.animationDelay = `${index * 0.06}s`;
-      
-      const englishTitle = anime.title_english || anime.title;
-      
-      card.innerHTML = `
-        <a href="anime.html?id=${anime.mal_id}">
-          <img src="${anime.images.jpg.image_url}">
-          <div class="search-info">
-            <div class="episodes">EP ${anime.episodes || 'N/A'}</div>
-            <h3>${englishTitle}</h3>
-          </div>
-        </a>
-      `;
-      
-      results.appendChild(card);
-    });
+    let card = document.createElement("div");
+    card.classList.add("card");
     
-    results.classList.remove('fade-out');
-    results.classList.add('fade-in');
-    applyButtonEffects();
+    card.innerHTML = `
+      <a href="anime.html?id=${anime.mal_id}">
+        <img src="${anime.images.jpg.image_url}">
+        <div class="search-info">
+          <div class="episodes">EP ${anime.episodes || 'N/A'}</div>
+          <h3>${title}</h3>
+        </div>
+      </a>
+    `;
     
-    if (scrollToResults) {
-      setTimeout(() => {
-        results.scrollIntoView({ 
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }, 50);
-    }
-  }, 50);
+    results.appendChild(card);
+  });
+  
+  if (scroll) {
+    results.scrollIntoView({ behavior: "smooth" });
+  }
 }
 
+// INITIAL LOAD + RESTORE SEARCH 🔥
+window.addEventListener("load", () => {
+  const lastSearch = localStorage.getItem("lastSearch");
+  const input = document.getElementById("searchInput");
+
+  if (lastSearch) {
+    input.value = lastSearch;
+    searchAnime(); // 🔥 restore results
+  } else {
+    loadInitialAnime();
+  }
+});
+
+// INITIAL
 async function loadInitialAnime() {
-  let results = document.getElementById("results");
-  
-  // LOADING STATE
-  results.innerHTML = "<p>Loading...</p>";
-
-  const animeData = await loadAnimeData('https://api.jikan.moe/v4/top/anime?limit=20');
-  updateResults(animeData, false);
+  const data = await loadAnimeData('https://api.jikan.moe/v4/top/anime?limit=20');
+  updateResults(data);
 }
 
+// SEARCH
 async function searchAnime() {
   let query = document.getElementById("searchInput").value.trim();
-  let results = document.getElementById("results");
-
-  // LOADING STATE
-  results.innerHTML = "<p>Searching...</p>";
   
   if (!query) {
+    localStorage.removeItem("lastSearch");
+    return loadInitialAnime();
+  }
+  
+  // 🔥 SAVE SEARCH
+  localStorage.setItem("lastSearch", query);
+  
+  const data = await loadAnimeData(`https://api.jikan.moe/v4/anime?q=${query}`);
+  updateResults(data, true);
+}
+
+// 🔥 ============================
+// 🔥 LIVE SUGGESTIONS
+// 🔥 ============================
+
+const input = document.getElementById("searchInput");
+const suggestionsBox = document.getElementById("suggestions");
+
+let debounceTimer;
+let activeIndex = -1;
+
+input.addEventListener("input", () => {
+  const query = input.value.trim();
+  
+  clearTimeout(debounceTimer);
+  
+  if (!query) {
+    suggestionsBox.style.display = "none";
+    localStorage.removeItem("lastSearch"); // 🔥 clear saved
     loadInitialAnime();
     return;
   }
   
-  const animeData = await loadAnimeData(`https://api.jikan.moe/v4/anime?q=${query}`);
-  updateResults(animeData, true);
-}
-
-// CLEAR INPUT DETECTION
-document.getElementById("searchInput").addEventListener('input', function(e) {
-  if (e.target.value.trim() === '') {
-    loadInitialAnime();
-  }
+  debounceTimer = setTimeout(async () => {
+    const data = await loadAnimeData(`https://api.jikan.moe/v4/anime?q=${query}&limit=5`);
+    
+    suggestionsBox.innerHTML = "";
+    
+    if (!data || data.length === 0) {
+      suggestionsBox.style.display = "none";
+      return;
+    }
+    
+    data.forEach((anime, index) => {
+      const title = anime.title_english || anime.title;
+      
+      const div = document.createElement("div");
+      div.classList.add("suggestion-item");
+      div.textContent = title;
+      
+      // 🔥 CLICK = SEARCH (NO REDIRECT)
+      div.addEventListener("click", () => {
+        input.value = title;
+        localStorage.setItem("lastSearch", title);
+        
+        suggestionsBox.style.display = "none";
+        
+        searchAnime(); // 🔥 do search
+      });
+      
+      suggestionsBox.appendChild(div);
+    });
+    
+    suggestionsBox.style.display = "block";
+    activeIndex = -1;
+    
+  }, 300);
 });
 
-// SEARCH BUTTON
-document.querySelector('.search-btn')?.addEventListener('click', searchAnime);
-
-// ENTER KEY SUPPORT
-document.getElementById("searchInput").addEventListener('keypress', function(e) {
-  if (e.key === 'Enter') {
+// KEYBOARD NAVIGATION
+input.addEventListener("keydown", (e) => {
+  const items = document.querySelectorAll(".suggestion-item");
+  
+  if (!items.length) return;
+  
+  if (e.key === "ArrowDown") {
+    activeIndex++;
+    if (activeIndex >= items.length) activeIndex = 0;
+  }
+  
+  else if (e.key === "ArrowUp") {
+    activeIndex--;
+    if (activeIndex < 0) activeIndex = items.length - 1;
+  }
+  
+  else if (e.key === "Enter") {
+    if (activeIndex >= 0) {
+      items[activeIndex].click(); // 🔥 triggers search now
+      return;
+    }
     searchAnime();
   }
+  
+  items.forEach(i => i.classList.remove("active"));
+  if (items[activeIndex]) items[activeIndex].classList.add("active");
 });
 
-// Load 20 top anime on page load
-loadInitialAnime();
+// CLICK OUTSIDE CLOSE
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".search-wrapper")) {
+    suggestionsBox.style.display = "none";
+  }
+});
