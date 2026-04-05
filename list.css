@@ -70,14 +70,14 @@
 }
 
 .list-info h3 {
-  font-size: 8px;
+  font-size: 10px;
   color: white;
   line-height: 1.4;
 }
 
 /* EP TEXT */
 .list-info p {
-  font-size: 4px;
+  font-size: 6px;
   color: white;
   margin: 5px 0;
 }
@@ -93,7 +93,7 @@
   border: 1px solid white;
   border-radius: 6px;
   font-size: 10px;
-  padding: 5px 6px;
+  padding: 5px 7px;
   z-index: 5;
   transition: all 0.3s ease;
 }
