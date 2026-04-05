@@ -2,6 +2,17 @@
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
+function showToast(message) {
+  const toast = document.getElementById("toastBox");
+  
+  toast.textContent = message;
+  toast.classList.add("show");
+  
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2000); // disappears after 2s
+}
+
 if (!id) {
   document.getElementById("animeTitle").textContent = "No anime selected.";
   throw new Error("Anime ID missing in URL");
@@ -15,32 +26,32 @@ async function loadAnime() {
   try {
     const res = await fetch(`https://api.jikan.moe/v4/anime/${id}`);
     const data = await res.json();
-
+    
     const anime = data.data;
     currentAnime = anime; // 🔥 store globally
-
+    
     // 🔥 FORCE ENGLISH
     const title = anime.title_english || anime.title || "Unknown Title";
     const synopsis = anime.synopsis || "No description available.";
     const rating = anime.score ? anime.score.toFixed(1) : "N/A";
-
+    
     // HERO
     const hero = document.getElementById("animeHero");
     hero.style.backgroundImage = `url(${anime.images.jpg.large_image_url})`;
     hero.style.backgroundSize = "cover";
     hero.style.backgroundPosition = "center";
-
+    
     // TEXT
     document.getElementById("animeTitle").textContent = title;
-
+    
     document.getElementById("animeGenres").textContent =
       anime.genres?.map(g => g.name).join(", ") || "Unknown";
-
+    
     document.getElementById("animeSynopsis").textContent = synopsis;
-
+    
     // ⭐ RATING (clean format)
     document.querySelector(".rating").textContent = `⭐ ${rating} / 10`;
-
+    
     // 🔥 EXPANDED SUMMARY
     document.getElementById("animeSummary").textContent =
       synopsis + "\n\n" +
@@ -48,7 +59,7 @@ async function loadAnime() {
       "Each episode builds upon the previous, gradually revealing motivations, conflicts, and hidden layers within the narrative. " +
       "Themes such as perseverance, identity, and personal struggle are explored, making the experience immersive and impactful. " +
       "As the plot progresses, tension rises and stakes become higher, leading to powerful moments and memorable developments.";
-
+    
   } catch (err) {
     console.error("Error loading anime:", err);
     document.getElementById("animeTitle").textContent = "Failed to load anime.";
@@ -60,22 +71,22 @@ async function loadCharacters() {
   try {
     const res = await fetch(`https://api.jikan.moe/v4/anime/${id}/characters`);
     const data = await res.json();
-
+    
     const container = document.getElementById("animeCharacters");
     container.innerHTML = "";
-
+    
     data.data.slice(0, 10).forEach(c => {
       const div = document.createElement("div");
       div.classList.add("character");
-
+      
       div.innerHTML = `
         <img src="${c.character.images.jpg.image_url}">
         <p>${c.character.name}</p>
       `;
-
+      
       container.appendChild(div);
     });
-
+    
   } catch (err) {
     console.error("Error loading characters:", err);
   }
@@ -85,17 +96,17 @@ async function loadCharacters() {
 document.getElementById("addToList").addEventListener("click", () => {
   try {
     if (!currentAnime) return;
-
+    
     const title = currentAnime.title_english || currentAnime.title;
-
+    
     let list = JSON.parse(localStorage.getItem("animeList")) || [];
-
+    
     // ❌ avoid duplicates
     if (list.find(a => a.mal_id === currentAnime.mal_id)) {
-      alert("Already in list!");
+      showToast("Anime already added");
       return;
     }
-
+    
     // 🔥 SAVE EPISODES ALSO (fix your list bug)
     list.push({
       mal_id: currentAnime.mal_id,
@@ -103,15 +114,18 @@ document.getElementById("addToList").addEventListener("click", () => {
       image: currentAnime.images.jpg.image_url,
       episodes: currentAnime.episodes || null
     });
-
+    
     localStorage.setItem("animeList", JSON.stringify(list));
-
-    // ✅ better UX than alert
-    document.getElementById("addToList").style.transform = "scale(1.2)";
+    
+    showToast("Anime added to list");
+    
+    // small click animation (keep it 🔥)
+    const btn = document.getElementById("addToList");
+    btn.style.transform = "scale(1.2)";
     setTimeout(() => {
-      document.getElementById("addToList").style.transform = "scale(1)";
+      btn.style.transform = "scale(1)";
     }, 200);
-
+    
   } catch (err) {
     console.error("Error adding to list:", err);
   }
