@@ -108,3 +108,33 @@
 .add-btn:hover {
   filter: invert(89%) sepia(87%) saturate(500%) hue-rotate(50deg) brightness(105%) contrast(105%);
 }
+
+/* 🔥 TOAST NOTIFICATION */
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  
+  padding: 16px;
+  font-size: 12px;
+  color: white;
+  
+  border: 1px solid var(--acid-lime);
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  
+  border-radius: 8px;
+  
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s ease;
+  z-index: 9999;
+}
+
+/* SHOW STATE */
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
