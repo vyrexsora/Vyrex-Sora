@@ -38,7 +38,7 @@
 
 .anime-hero p {
   margin-top: 10px;
-  font-size: 6px;
+  font-size: 8px;
   color: lightgray;
 }
 
@@ -137,4 +137,19 @@
 .toast.show {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
+}
+
+@media (min-width: 600px) {
+  .anime-hero h1 {
+    font-size: 14px;
+  }
+  .anime-hero p {
+    font-size: 10px;
+  }
+  .anime-card h2 {
+    font-size: 18px;
+  }
+  .anime-card p {
+    font-size: 10px;
+  }
 }
