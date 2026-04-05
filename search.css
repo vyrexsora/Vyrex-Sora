@@ -203,13 +203,13 @@ button, .btn {
 /* EPISODES TEXT */
 .card .episodes {
   color: white;
-  font-size: 4px;
+  font-size: 6px;
   margin: 5px 0;
 }
 
 /* TEXT */
 .card h3 {
-  font-size: 8px;
+  font-size: 10px;
   color: white;
   line-height: 1.4;
 }
