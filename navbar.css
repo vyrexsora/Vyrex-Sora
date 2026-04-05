@@ -110,6 +110,7 @@ body {
   display: block;
   font-size: 20px;
   transition: 0.2s ease;
+  cursor: pointer;
 }
 
 .menu-toggle:hover {
